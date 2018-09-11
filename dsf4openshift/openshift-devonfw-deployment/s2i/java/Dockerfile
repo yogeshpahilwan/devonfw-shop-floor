@@ -26,7 +26,7 @@ EXPOSE 8081
 
 # Installed components version
 ENV JAVA_VERSION 1.8.0
-ENV MAVEN_VERSION 3.5.3
+ENV MAVEN_VERSION 3.5.4
 
 # Packages to install
 ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils"
