@@ -69,7 +69,7 @@ LABEL name="$NAME" \
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
 RUN echo "My Dockerfile"
 
-RUN /etc/yum.repos.d
+RUN cd /etc/yum.repos.d
 RUN mkdir repobak
 RUN mv *.repo repobak/
 RUN wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo
