@@ -75,9 +75,8 @@ RUN mkdir /etc/yum.repos.d/repobak
 RUN cd /etc/yum.repos.d
 RUN mv -f *.* /etc/yum.repos.d/repobak/
 
-RUN yum -y install wget
-RUN (wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo)
-RUN (wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo)
+RUN (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo)
+RUN (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo)
 
 RUN rm -fr /var/cache/yum/* && yum clean all
 RUN yum clean metadata
