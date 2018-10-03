@@ -71,6 +71,8 @@ RUN echo "My Dockerfile"
 
 RUN echo "timeout=500" >> /etc/yum.conf
 
+RUN yum clean metadata
+
 RUN yum -y install wget
 
 RUN mkdir /etc/yum.repos.d/repobak
