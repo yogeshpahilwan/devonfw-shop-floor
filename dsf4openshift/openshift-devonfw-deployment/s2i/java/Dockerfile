@@ -67,10 +67,20 @@ LABEL name="$NAME" \
 # Install basic components
 
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
+RUN echo "My Dockerfile"
+
+RUN /etc/yum.repos.d
+RUN mkdir repobak
+RUN mv *.repo repobak/
+RUN wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo
+RUN wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo
+
+RUN rm -fr /var/cache/yum/* && yum clean all
+RUN update -y
 RUN yum install -y epel-release
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
-RUN rm -fr /var/cache/yum/* && yum clean all 
+# RUN rm -fr /var/cache/yum/* && yum clean all 
 
 # Install OS packages
 RUN yum install -y --enablerepo=centosplus $INSTALL_PKGS $DEVEL_PACKAGES && \
