@@ -71,7 +71,6 @@ RUN echo "My Dockerfile"
 
 RUN echo "timeout=500" >> /etc/yum.conf
 
-RUN yum -y upgrade
 RUN yum -y install wget
 
 RUN mkdir /etc/yum.repos.d/repobak
@@ -81,7 +80,7 @@ RUN (wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-al
 RUN (wget http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo)
 
 RUN rm -fr /var/cache/yum/* && yum clean all
-RUN update -y
+RUN yum update -y
 RUN yum install -y epel-release
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
