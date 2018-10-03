@@ -69,6 +69,10 @@ LABEL name="$NAME" \
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
 RUN echo "My Dockerfile"
 
+RUN  apt-get update \
+  && apt-get install -y wget \
+  && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir /etc/yum.repos.d/repobak
 RUN cd /etc/yum.repos.d
 RUN mv -f *.* /etc/yum.repos.d/repobak/
