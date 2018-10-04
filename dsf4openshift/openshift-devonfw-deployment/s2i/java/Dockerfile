@@ -81,7 +81,12 @@ RUN yum clean all && \
     (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
-    yum update -y
+    yum update -y && \
+    
+    yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+    yum clean all && \
+    rm -rf /var/cache/yum
         
     #yum clean all && \
     #rm -fr /var/cache/yum/* && \
@@ -94,10 +99,10 @@ RUN yum clean all && \
 # RUN rm -fr /var/cache/yum/* && yum clean all 
 
 # Install OS packages
-RUN yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
-    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+# RUN yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+ #   rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+ #   yum clean all && \
+ #   rm -rf /var/cache/yum
 
 # Install Maven
 RUN (curl -0 http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
