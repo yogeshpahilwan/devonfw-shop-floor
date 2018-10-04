@@ -77,12 +77,15 @@ RUN yum clean all && \
     cd /etc/yum.repos.d && \
     mv -f *.* /etc/yum.repos.d/repobak/ && \
     cd /etc/yum.repos.d && \
+    ls -ltrh && \
     (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
     (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
+    echo "After curl download" && \
+    ls -ltrh && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
     yum update -y && \
-    yum repolist
+    yum repolist all
     
     #yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
     #rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
