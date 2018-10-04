@@ -70,7 +70,7 @@ LABEL name="$NAME" \
 RUN echo "My Dockerfile"
 
 RUN yum clean all && \
-    rm -fr /var/cache/yum/* && \
+    rm -fr /var/cache/yum && \
     yum clean metadata && \
     echo "timeout=500" >> /etc/yum.conf && \
     mkdir /etc/yum.repos.d/repobak && \
@@ -85,7 +85,8 @@ RUN yum clean all && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
     yum update -y && \
-    yum repolist all
+    echo "After yum update" && \
+    ls -ltrh
     
     #yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
     #rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
