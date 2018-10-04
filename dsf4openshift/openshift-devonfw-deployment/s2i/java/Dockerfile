@@ -69,7 +69,10 @@ LABEL name="$NAME" \
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
 RUN echo "My Dockerfile"
 
-RUN echo "timeout=500" >> /etc/yum.conf && \
+RUN yum clean all && \
+    rm -fr /var/cache/yum/* && \
+    yum clean metadata && \
+    echo "timeout=500" >> /etc/yum.conf && \
     mkdir /etc/yum.repos.d/repobak && \
     cd /etc/yum.repos.d && \
     mv -f *.* /etc/yum.repos.d/repobak/ && \
