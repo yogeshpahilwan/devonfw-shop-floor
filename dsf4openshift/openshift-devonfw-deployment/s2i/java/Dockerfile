@@ -79,7 +79,7 @@ RUN echo "timeout=500" >> /etc/yum.conf && \
     yum clean all && \
     rm -fr /var/cache/yum/* && \
     yum clean metadata && \
-    RUN yum update -y
+    yum update -y
 
 #RUN yum install -y epel-release
 
