@@ -82,11 +82,12 @@ RUN yum clean all && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
     yum update -y && \
+    yum repolist
     
-    yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
-    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+    #yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+    #rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+    #yum clean all && \
+    #rm -rf /var/cache/yum
         
     #yum clean all && \
     #rm -fr /var/cache/yum/* && \
