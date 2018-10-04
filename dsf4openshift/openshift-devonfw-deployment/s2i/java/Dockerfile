@@ -74,10 +74,10 @@ RUN echo "timeout=500" >> /etc/yum.conf && \
     cd /etc/yum.repos.d && \
     mv -f *.* /etc/yum.repos.d/repobak/ && \
     cd /etc/yum.repos.d && \
-    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
-    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
     yum clean all && \
     rm -fr /var/cache/yum/* && \
+    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
+    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
     yum update -y
         
     #yum clean all && \
