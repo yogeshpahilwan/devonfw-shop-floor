@@ -87,7 +87,7 @@ RUN yum clean all && \
     yum install -y yum-utils gettext hostname && \
     #yum install -y centos-release-scl-rh epel-release && \
     yum install -y centos-release-scl-rh && \
-    yum-config-manager --enable centos-sclo-rh-testing && \
+    #yum-config-manager --enable centos-sclo-rh-testing && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - && \
