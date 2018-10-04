@@ -76,20 +76,14 @@ RUN echo "timeout=500" >> /etc/yum.conf && \
     cd /etc/yum.repos.d && \
     (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
     (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
-    yum repolist all && \
-    yum install -y yum-utils && \
-    yum clean all && \
-    yum repolist enabled && \
-    yum-config-manager --enable groupit-centos-all-x64.repo && \
-    yum-config-manager --enable groupit-epel.repo && \
-    #subscription-manager repos --list && \
-    #subscription-manager repos --enable=groupit-centos-all-x64.repo && \
-    #subscription-manager repos --enable=groupit-epel.repo && \
+    yum update -y && \
+    yum repolist all 
+    
     #yum clean all && \
     #rm -fr /var/cache/yum/* && \
     #yum clean metadata && \
-    yum update -y
-
+    
+    
 #RUN yum install -y epel-release
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
