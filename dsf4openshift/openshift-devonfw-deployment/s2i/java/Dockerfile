@@ -86,10 +86,12 @@ RUN yum clean all && \
     sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
     yum update -y && \
     echo "After yum update" && \
-    ls -ltrh
-    
-    #yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
-    #rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+    ls -ltrh && \
+    rm -rf CentOS-*.* && \
+    echo "After removing Centos pkgs" && \
+    ls -ltrh && \
+    yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES
     #yum clean all && \
     #rm -rf /var/cache/yum
         
