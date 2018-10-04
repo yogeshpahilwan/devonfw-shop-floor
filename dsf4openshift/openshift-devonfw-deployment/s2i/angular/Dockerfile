@@ -85,7 +85,8 @@ RUN yum clean all && \
     ls -ltrh && \
     yum install -y curl sudo && \
     yum install -y yum-utils gettext hostname && \
-    yum install -y centos-release-scl-rh epel-release && \
+    #yum install -y centos-release-scl-rh epel-release && \
+    yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
