@@ -60,6 +60,7 @@ LABEL name="$NAME" \
       io.k8s.display-name="$NAME" \
       io.openshift.tags="$TAGS"
 
+ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils rh-nginx110 rh-nginx110-nginx http-parser.x86_64 autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig redhat-rpm-config rpm-build rpm-sign"
 
 RUN yum clean all && \
     rm -fr /var/cache/yum && \
@@ -103,7 +104,7 @@ RUN yum clean all && \
 # RUN rm -fr /var/cache/yum/* && yum clean all 
 
 # Packages to add
-ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils rh-nginx110 rh-nginx110-nginx http-parser.x86_64 autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig redhat-rpm-config rpm-build rpm-sign"
+# ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils rh-nginx110 rh-nginx110-nginx http-parser.x86_64 autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig redhat-rpm-config rpm-build rpm-sign"
 
 # Install extra packages
 # RUN yum install -y yum-utils gettext hostname && \
