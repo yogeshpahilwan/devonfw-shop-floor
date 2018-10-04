@@ -77,8 +77,8 @@ RUN yum clean all && \
     cd /etc/yum.repos.d && \
     mv -f *.* /etc/yum.repos.d/repobak/ && \
     cd /etc/yum.repos.d && \
-    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
-    (curl http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
     yum update -y
         
     #yum clean all && \
