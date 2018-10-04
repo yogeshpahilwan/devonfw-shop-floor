@@ -69,8 +69,6 @@ LABEL name="$NAME" \
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
 RUN echo "My Dockerfile"
 
-RUN touch /etc/abc.txt
-
 RUN echo "timeout=500" >> /etc/yum.conf
 
 RUN mkdir /etc/yum.repos.d/repobak
