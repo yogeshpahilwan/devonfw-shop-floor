@@ -67,7 +67,8 @@ LABEL name="$NAME" \
 # Install basic components
 
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
-RUN yum install -y epel-release
+RUN echo "timeout=500" >> /etc/yum.conf && \
+    yum install -y epel-release
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
 RUN rm -fr /var/cache/yum/* && yum clean all 
