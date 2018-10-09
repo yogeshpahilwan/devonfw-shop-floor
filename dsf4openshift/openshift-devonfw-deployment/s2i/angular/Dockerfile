@@ -61,8 +61,9 @@ LABEL name="$NAME" \
       io.openshift.tags="$TAGS"
 
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
-RUN yum install -y epel-release
-RUN yum update -y
+RUN echo "timeout=500" >> /etc/yum.conf && \  
+    yum install -y epel-release &&\ 
+    yum update -y
 
 # Install SUDO and CURL (for correct NodeJS version: 8.9.1 LTS)
 RUN yum install curl sudo -y
