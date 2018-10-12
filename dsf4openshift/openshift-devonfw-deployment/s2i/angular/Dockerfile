@@ -60,32 +60,64 @@ LABEL name="$NAME" \
       io.k8s.display-name="$NAME" \
       io.openshift.tags="$TAGS"
 
-# Gain access to EPEL (Extra Packages for Enterprise Linux)
-RUN echo "timeout=500" >> /etc/yum.conf && \  
-    yum install -y epel-release &&\ 
-    yum update -y
-
-# Install SUDO and CURL (for correct NodeJS version: 8.9.1 LTS)
-RUN yum install curl sudo -y
-RUN yum update -y
-
-# Clean the cache (see https://access.redhat.com/articles/1320623)
-RUN rm -fr /var/cache/yum/* && yum clean all 
-
-# Packages to add
 ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils rh-nginx110 rh-nginx110-nginx http-parser.x86_64 autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig redhat-rpm-config rpm-build rpm-sign"
 
-# Install extra packages
-RUN yum install -y yum-utils gettext hostname && \
-    yum install -y centos-release-scl-rh epel-release && \
-    yum-config-manager --enable centos-sclo-rh-testing && \
+RUN yum clean all && \
+    rm -fr /var/cache/yum && \
+    yum clean metadata && \
+    echo "timeout=500" >> /etc/yum.conf && \
+    mkdir /etc/yum.repos.d/repobak && \
+    cd /etc/yum.repos.d && \
+    mv -f *.* /etc/yum.repos.d/repobak/ && \
+    cd /etc/yum.repos.d && \
+    ls -ltrh && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
+    echo "After curl download" && \
+    ls -ltrh && \
+    sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
+    sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
+    yum update -y && \
+    echo "After yum update" && \
+    ls -ltrh && \
+    rm -rf CentOS-*.* && \
+    echo "After removing Centos pkgs" && \
+    ls -ltrh && \
+    yum install -y curl sudo && \
+    yum install -y yum-utils gettext hostname && \
+    #yum install -y centos-release-scl-rh epel-release && \
+    yum install -y centos-release-scl-rh && \
+    #yum-config-manager --enable centos-sclo-rh-testing && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all
+    curl --silent --location https://rpm.nodesource.com/setup_8.x | bash - && \
+    yum install -y nodejs
+
+# Gain access to EPEL (Extra Packages for Enterprise Linux)
+# RUN yum install -y epel-release
+# RUN yum update -y
+
+# Install SUDO and CURL (for correct NodeJS version: 8.9.1 LTS)
+# RUN yum install curl sudo -y
+# RUN yum update -y
+
+# Clean the cache (see https://access.redhat.com/articles/1320623)
+# RUN rm -fr /var/cache/yum/* && yum clean all 
+
+# Packages to add
+# ENV INSTALL_PKGS "curl tar unzip bc which lsof make nss_wrapper bind-utils rh-nginx110 rh-nginx110-nginx http-parser.x86_64 autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig redhat-rpm-config rpm-build rpm-sign"
+
+# Install extra packages
+# RUN yum install -y yum-utils gettext hostname && \
+#    yum install -y centos-release-scl-rh epel-release && \
+#    yum-config-manager --enable centos-sclo-rh-testing && \
+#    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
+#    rpm -V $INSTALL_PKGS && \
+#    yum clean all
 
 # Install NodeJS 8.9.1 LTS
-RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
-RUN yum install -y nodejs
+# RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
+# RUN yum install -y nodejs
 
 # Copy the S2I scripts to $STI_SCRIPTS_PATH
 LABEL io.openshift.s2i.scripts-url=image:///usr/local/sti
@@ -139,5 +171,4 @@ USER ${USER_ID}
 
 # Set the default CMD for the image
 # WORKDIR ${APP_ROOT}
-
 CMD $STI_SCRIPTS_PATH/usage
