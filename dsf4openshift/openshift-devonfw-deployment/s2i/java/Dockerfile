@@ -67,17 +67,49 @@ LABEL name="$NAME" \
 # Install basic components
 
 # Gain access to EPEL (Extra Packages for Enterprise Linux)
-RUN echo "timeout=500" >> /etc/yum.conf && \
-    yum install -y epel-release
+RUN echo "My Dockerfile"
+
+RUN yum clean all && \
+    rm -fr /var/cache/yum && \
+    yum clean metadata && \
+    echo "timeout=500" >> /etc/yum.conf && \
+    mkdir /etc/yum.repos.d/repobak && \
+    cd /etc/yum.repos.d && \
+    mv -f *.* /etc/yum.repos.d/repobak/ && \
+    cd /etc/yum.repos.d && \
+    ls -ltrh && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-centos-all-x64.repo) && \
+    (curl -O http://mirror-south.fr.capgemini.com/yum/prod/centos/groupit-epel.repo) && \
+    echo "After curl download" && \
+    ls -ltrh && \
+    sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-centos-all-x64.repo && \
+    sed -i 's/gpgcheck=1/gpgcheck=0/g' groupit-epel.repo && \
+    yum update -y && \
+    echo "After yum update" && \
+    ls -ltrh && \
+    rm -rf CentOS-*.* && \
+    echo "After removing Centos pkgs" && \
+    ls -ltrh && \
+    yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES
+    #yum clean all && \
+    #rm -rf /var/cache/yum
+        
+    #yum clean all && \
+    #rm -fr /var/cache/yum/* && \
+    #yum clean metadata && \
+    
+    
+#RUN yum install -y epel-release
 
 # Clean the cache (see https://access.redhat.com/articles/1320623)
-RUN rm -fr /var/cache/yum/* && yum clean all 
+# RUN rm -fr /var/cache/yum/* && yum clean all 
 
 # Install OS packages
-RUN yum install -y --enablerepo=centosplus $INSTALL_PKGS $DEVEL_PACKAGES && \
-    rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+# RUN yum install -y $INSTALL_PKGS $DEVEL_PACKAGES && \
+ #   rpm -V $INSTALL_PKGS $DEVEL_PACKAGES && \
+ #   yum clean all && \
+ #   rm -rf /var/cache/yum
 
 # Install Maven
 RUN (curl -0 http://www.eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
