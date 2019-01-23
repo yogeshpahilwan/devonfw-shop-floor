@@ -131,7 +131,9 @@ RUN chmod -R a+rx ${STI_SCRIPTS_PATH} && \
 # random UID.
 RUN mkdir -p ${APP_ROOT}/src && \
     mkdir -p ${APP_ROOT}/deploy && \
-    chmod -R u=rwx ${APP_ROOT} && \
+    mkdir -p ${APP_ROOT}/logs && \
+    chmod -R u+rx ${APP_ROOT} && \
+    chmod -R a+rwX  ${APP_ROOT}/logs 
     chown -R ${USER_ID}:0 ${APP_ROOT}
 
 # The default user in the image
