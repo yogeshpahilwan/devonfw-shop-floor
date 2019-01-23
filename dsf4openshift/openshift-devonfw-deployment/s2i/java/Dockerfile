@@ -133,7 +133,7 @@ RUN mkdir -p ${APP_ROOT}/src && \
     mkdir -p ${APP_ROOT}/deploy && \
     mkdir -p ${APP_ROOT}/logs && \
     chmod -R u+rx ${APP_ROOT} && \
-    chmod -R a+rwX  ${APP_ROOT}/logs 
+    chmod -R a+rwX  ${APP_ROOT}/logs && \
     chown -R ${USER_ID}:0 ${APP_ROOT}
 
 # The default user in the image
